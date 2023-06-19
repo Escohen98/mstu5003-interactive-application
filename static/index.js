@@ -64,7 +64,7 @@ let videos = [
 ];
 
 (function() {
-  let CHANNEL = -1;
+  let CHANNEL = 0;
   window.addEventListener("load", initialize);
 
   function initialize() {
@@ -74,6 +74,8 @@ let videos = [
     document.querySelector(".power-switch").checked = false;
     document.querySelector("input").value = 0;
     document.querySelector("#input-btn").addEventListener("click", updatePlayer);
+    //TO-DO: Give the powerbutton its own event listener.
+    document.querySelector(".power-switch").addEventListener("change", power);
   }
 
   //Changes tv settings
@@ -109,16 +111,18 @@ let videos = [
     //video.volume = (volume+1)/100;
  }
 
-  //Creates a source element then adds to the video element
-  function createSource(video, sourceEl) {
-    let source = document.createElement("SOURCE");
-    source.src = sourceEl.source;
-    source.type = sourceEl.type; //Starts as hidden
-    source.id = `chn${sourceEl.channel}`;
-    source.hidden = true;
-    video.appendChild(source);
+  function power() {
+    console.log("go");
+    let frame = document.querySelector("iframe");
+    let header = document.querySelector("h2").textContent;
+    if (document.querySelector(".power-switch").checked) {
+      frame.src = videos[CHANNEL].source;
+      header = videos[CHANNEL].title;
+    } else {
+      frame.src = "";
+      header = "";
+    }
   }
-
 
   //Changes the active channel. Sets the previous channel to hidden.
   function changeChannel(video, channel, power) {
@@ -129,7 +133,6 @@ let videos = [
     console.log("hit");
     if(!power) { //Turns all channels to hidden if power is not checked.
       video.src = "";
-      CHANNEL = -1;
     }  else { //Otherwise, do everything
       video.src=videos[channel].source;
       document.querySelector("h2").textContent = videos[channel].title;
