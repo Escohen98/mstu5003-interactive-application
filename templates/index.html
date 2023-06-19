@@ -6,14 +6,15 @@
     <title>Interactive Appliance</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/index.css">
+    <script src="../static/index.js"></script>
   </head>
 
   <body>
     <header>
-      <form>
-        <label for="power-switch", class="control"> On/Off: <input type="checkbox" class="power-switch"/></label>
-        <label for="channel-input", class="control"> Channel (0-9): <input type="number" id="channel-input" class="num-input" value="0" min="0" max="9"/></label>
-        <label for="volume", class="control"> Volume (0-99): <input type="number" id="volume-input" class="num-input" value="0" min="0" max="99" /></label>
+      <form action="" method="post">
+        <label for="power-switch", class="control"> On/Off: <input name="power" type="checkbox" class="power-switch"/></label>
+        <label for="channel-input", class="control"> Channel (0-9): <input name="channel" type="number" id="channel-input" class="num-input" value="0" min="0" max="9"/></label>
+        <label for="volume", class="control"> Volume (0-99): <input name="volume" type="number" id="volume-input" class="num-input" value="0" min="0" max="99" /></label>
       </form>
       <button type="button" class="btn btn-primary" id="input-btn">Go!</button>
     </header>
@@ -21,15 +22,15 @@
       <article id="television">
         <div id="screen">
           <video class="player" autoPlay>
-            <source id="video-source" src="https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4" type="video/mp4">
+            <source id="video-source" src="{{video}}" type="video/mp4">
             Your browser does not support the video tag.
           </video>
-          <img src="../images/the_simpsons_tv.png" alt="simpsons-tv" id="tv-image" >
+          <img src="{{tv_img}}" alt="simpsons-tv" id="tv-image" >
         </div>
       </article>
       <article id="remote">
         <div id="controller">
-          <img src="../images/cartoon_remote.png" alt="remote">
+          <img src="{{remote_img}}" alt="remote">
         </div>
       </article>
     </main>
