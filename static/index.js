@@ -7,31 +7,31 @@ let videos = [
   },
   {
     channel: 1,
-    video: "https://ufile.io/vzoxiszb"
+    video: "../static/videos/RickRoll x K-POP (Deep House Remix).mp4"
   },
   {
     channel: 2,
-    video: "https://ufile.io/yp11ofl9"
+    video: "../static/videos/Rick Roll The Remakeboot.mp4"
   },
   {
     channel: 3,
-    video: ""
+    video: "../static/videos/Never Gonna Give You Up (Lofi Remix).mp4"
   },
   {
     channel: 4,
-    video: ""
+    video: "../static/videos/RickRoll but make it Anime.mp4"
   },
   {
     channel: 5,
-    video: ""
+    video: "../static/videos/Rickroll [Remix].mp4"
   },
   {
     channel: 6,
-    video: ""
+    video: "../static/videos/Big Ben's Final Rick Roll.mp4"
   },
   {
     channel: 7,
-    video: ""
+    video: "../static/videos/rickroll cada vez mas antiguo.mp4"
   },
   {
     channel: 8,
@@ -54,12 +54,20 @@ let videos = [
   //This include channel (video), volume, and power.
   function updatePlayer() {
     let video = document.querySelector("video");
-    let power = document.querySelector("#power-switch");
-    let channel = document.querySelector("#channel-input");
-    let volume = document.querySelector("#volume-input");
-    console.log(channel.value);
-    video.firstElementChild.setAttribute("src", videos[channel.value].video);
+    let source = video.childNodes[0];
+    let settings = document.getElementsByTagName("input");
+    let power = settings[0];
+    let channel = settings[1];
+    let volume = settings[2];
+    console.log(power.checked);
+    if (!power.checked) {
+      source.src = "";
+    } else {
+    source.src = videos[channel.value].video;
+    video.load();
+    video.play();
     console.log(document.querySelector("source").getAttribute("src"));
     //video.volume = (volume+1)/100;
+    }
   }
 })();
