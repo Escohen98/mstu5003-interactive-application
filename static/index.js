@@ -3,52 +3,62 @@
 let videos = [
   {
     channel: 0,
+    title: "Original",
     source: "https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4",
     type: "video/mp4"
   },
   {
     channel: 1,
-    source: "../static/sources/RickRoll x K-POP (Deep House Remix).mp4",
+    title: "K-POP (Deep House Remix)",
+    source: "https://www.youtube.com/embed/K4DKVAT2-x8",
     type: "video/mp4"
   },
   {
     channel: 2,
-    source: "../static/sources/Rick Roll The Remakeboot.mp4",
+    title: "The Remakeboot",
+    source: "https://www.youtube.com/embed/H8ZH_mkfPUY",
     type: "video/mp4"
   },
   {
     channel: 3,
-    source: "../static/sources/Never Gonna Give You Up (Lofi Remix).mp4",
+    title: "Lofi Remix",
+    source: "https://www.youtube.com/embed/bPZSDBvDmVw",
     type: "video/mp4"
   },
   {
     channel: 4,
-    source: "../static/sources/RickRoll but make it Anime.mp4",
+    title: "But Make it Anime...",
+    source: "https://www.youtube.com/embed/lpiB2wMc49g",
     type: "video/mp4"
   },
   {
     channel: 5,
-    source: "../static/sources/Rickroll [Remix].mp4",
+    title: "Yung Gravy - Better (Get Money)",
+    source: "https://www.youtube.com/embed/8oE5Z2GLhNc",
     type: "video/mp4"
   },
   {
     channel: 6,
-    source: "../static/sources/Big Ben's Final Rick Roll.mp4",
+    title: "Big Ben's Final Bell",
+    source: "https://www.youtube.com/embed/MO7bRMa9bmA",
     type: "video/mp4"
   },
   {
     channel: 7,
-    source: "../static/sources/rickroll cada vez mas antiguo.mp4",
+    title: "En Español",
+    source: "https://youtube.com/embed/7jjoyy7_RCk",
     type: "video.mp4"
   },
   {
     channel: 8,
-    source: "",
+    title: "Becoming Older",
+    source: "https://www.youtube.com/embed/Ixy9HL8w3ik",
     type: "video.mp4"
   },
   {
     channel: 9,
-    source: "",
+    title: "Becoming Futuristic",
+    source: "https://www.youtube.com/embed/SMddprKlk1w",
     type: "video.mp4"
   }
 ];
@@ -58,8 +68,9 @@ let videos = [
   window.addEventListener("load", initialize);
 
   function initialize() {
-    let video = document.querySelector("video");
-    videos.forEach(element => createSource(video, element));
+    let video = document.querySelector("iframe")
+  //let video = document.querySelector("video");
+    //videos.forEach(element => createSource(video, element));
     document.querySelector(".power-switch").checked = false;
     document.querySelector("#input-btn").addEventListener("click", updatePlayer);
   }
@@ -67,8 +78,8 @@ let videos = [
   //Changes tv settings
   //This include channel (video), volume, and power.
   function updatePlayer() {
-    let video = document.querySelector("video");
-    let source = video.childNodes[0];
+    let video = document.querySelector("iframe");
+  //  let source = video.childNodes[0];
     let settings = document.getElementsByTagName("input");
     let power = settings[0];
     let channel = settings[1].value;
@@ -101,21 +112,14 @@ let videos = [
     return;*/
     console.log("hit");
     if(!power) { //Turns all channels to hidden if power is not checked.
-      video.pause();
-      if(CHANNEL >= 0)
-        video.childNodes[CHANNEL].hidden = true;
-      console.log("hit");
+      video.src = "";
       CHANNEL = -1;
     } else if (CHANNEL == -1) { //If power is now checked but previously wasn't, enables channel without hiding another
-        video.childNodes[channel].type = videos[channel].type;
+        video.src = videos[channel].source;
         CHANNEL = channel;
-        video.play();
     } else { //Otherwise, do everything
-      video.pause();
-      video.childNodes[CHANNEL].hidden = true;
-      video.childNodes[channel].hidden = false;
+      video.src=videos[channel].source;
       CHANNEL = channel;
-      video.play();
     }
   }
 
