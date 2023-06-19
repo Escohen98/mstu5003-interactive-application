@@ -2,51 +2,65 @@
 //MSTU5003 Interactive Application Project
 let videos = [
   {
-    "channel": 0,
-    "video": "https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4"
+    channel: 0,
+    source: "https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4",
+    type: "video/mp4"
   },
   {
     channel: 1,
-    video: "../static/videos/RickRoll x K-POP (Deep House Remix).mp4"
+    source: "../static/sources/RickRoll x K-POP (Deep House Remix).mp4",
+    type: "video/mp4"
   },
   {
     channel: 2,
-    video: "../static/videos/Rick Roll The Remakeboot.mp4"
+    source: "../static/sources/Rick Roll The Remakeboot.mp4",
+    type: "video/mp4"
   },
   {
     channel: 3,
-    video: "../static/videos/Never Gonna Give You Up (Lofi Remix).mp4"
+    source: "../static/sources/Never Gonna Give You Up (Lofi Remix).mp4",
+    type: "video/mp4"
   },
   {
     channel: 4,
-    video: "../static/videos/RickRoll but make it Anime.mp4"
+    source: "../static/sources/RickRoll but make it Anime.mp4",
+    type: "video/mp4"
   },
   {
     channel: 5,
-    video: "../static/videos/Rickroll [Remix].mp4"
+    source: "../static/sources/Rickroll [Remix].mp4",
+    type: "video/mp4"
   },
   {
     channel: 6,
-    video: "../static/videos/Big Ben's Final Rick Roll.mp4"
+    source: "../static/sources/Big Ben's Final Rick Roll.mp4",
+    type: "video/mp4"
   },
   {
     channel: 7,
-    video: "../static/videos/rickroll cada vez mas antiguo.mp4"
+    source: "../static/sources/rickroll cada vez mas antiguo.mp4",
+    type: "video.mp4"
   },
   {
     channel: 8,
-    video: ""
+    source: "",
+    type: "video.mp4"
   },
   {
     channel: 9,
-    video: ""
+    source: "",
+    type: "video.mp4"
   }
 ];
 
 (function() {
+  let CHANNEL = -1;
   window.addEventListener("load", initialize);
 
   function initialize() {
+    let video = document.querySelector("video");
+    videos.forEach(element => createSource(video, element));
+    document.querySelector(".power-switch").checked = false;
     document.querySelector("#input-btn").addEventListener("click", updatePlayer);
   }
 
@@ -57,17 +71,63 @@ let videos = [
     let source = video.childNodes[0];
     let settings = document.getElementsByTagName("input");
     let power = settings[0];
-    let channel = settings[1];
-    let volume = settings[2];
-    console.log(power.checked);
+    let channel = settings[1].value;
+    let volume = settings[2].value;
+
+    video.volume = setVolume(volume);
     if (!power.checked) {
-      source.src = "";
-    } else {
-    source.src = videos[channel.value].video;
-    video.load();
-    video.play();
-    console.log(document.querySelector("source").getAttribute("src"));
-    //video.volume = (volume+1)/100;
+      CHANNEL = -1;
     }
+    changeChannel(video, channel, power.checked);
+    //video.volume = (volume+1)/100;
+ }
+
+  //Creates a source element then adds to the video element
+  function createSource(video, sourceEl) {
+    let source = document.createElement("SOURCE");
+    source.src = sourceEl.source;
+    source.type = sourceEl.type; //Starts as hidden
+    source.id = `chn${sourceEl.channel}`;
+    source.hidden = true;
+    video.appendChild(source);
+  }
+
+
+  //Changes the active channel. Sets the previous channel to hidden.
+  function changeChannel(video, channel, power) {
+    /*video.pause();
+    document.getElementById("chn0").setAttribute("src",videos[3].source);
+    video.play();
+    return;*/
+    console.log("hit");
+    if(!power) { //Turns all channels to hidden if power is not checked.
+      video.pause();
+      if(CHANNEL >= 0)
+        video.childNodes[CHANNEL].hidden = true;
+      console.log("hit");
+      CHANNEL = -1;
+    } else if (CHANNEL == -1) { //If power is now checked but previously wasn't, enables channel without hiding another
+        video.childNodes[channel].type = videos[channel].type;
+        CHANNEL = channel;
+        video.play();
+    } else { //Otherwise, do everything
+      video.pause();
+      video.childNodes[CHANNEL].hidden = true;
+      video.childNodes[channel].hidden = false;
+      CHANNEL = channel;
+      video.play();
+    }
+  }
+
+  //does the math to set the volume.
+  //Returns result
+  function setVolume(volume) {
+    //Safeguard
+    if(volume > 99)
+      volume = 99;
+    else if(volume < 0)
+      volume=0;
+    vol = (volume+1)/1000
+    return vol.toFixed(2);
   }
 })();
