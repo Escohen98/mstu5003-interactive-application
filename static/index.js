@@ -10,7 +10,7 @@ let videos = [
   {
     channel: 1,
     title: "K-POP (Deep House Remix)",
-    source: "https://www.youtube.com/embed/K4DKVAT2-x8",
+    source: "https://www.youtube.com/embed/lrzKT-dFUjE",
     type: "video/mp4"
   },
   {
@@ -22,7 +22,7 @@ let videos = [
   {
     channel: 3,
     title: "Lofi Remix",
-    source: "https://www.youtube.com/embed/bPZSDBvDmVw",
+    source: "https://youfiles.herokuapp.com/665689e0-09a2-43a5-88ee-6e18b61fa004",
     type: "video/mp4"
   },
   {
@@ -72,6 +72,7 @@ let videos = [
   //let video = document.querySelector("video");
     //videos.forEach(element => createSource(video, element));
     document.querySelector(".power-switch").checked = false;
+    document.querySelector("input").value = 0;
     document.querySelector("#input-btn").addEventListener("click", updatePlayer);
   }
 
@@ -89,7 +90,9 @@ let videos = [
     if (!power.checked) {
       CHANNEL = -1;
     }
-    changeChannel(video, channel, power.checked);
+
+    if (channel != CHANNEL)
+      changeChannel(video, channel, power.checked);
     //video.volume = (volume+1)/100;
  }
 
@@ -114,11 +117,9 @@ let videos = [
     if(!power) { //Turns all channels to hidden if power is not checked.
       video.src = "";
       CHANNEL = -1;
-    } else if (CHANNEL == -1) { //If power is now checked but previously wasn't, enables channel without hiding another
-        video.src = videos[channel].source;
-        CHANNEL = channel;
-    } else { //Otherwise, do everything
+    }  else { //Otherwise, do everything
       video.src=videos[channel].source;
+      document.querySelector("h2").value = videos[channel].title;
       CHANNEL = channel;
     }
   }
