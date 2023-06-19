@@ -132,7 +132,7 @@ let videos = [
       CHANNEL = -1;
     }  else { //Otherwise, do everything
       video.src=videos[channel].source;
-      document.querySelector("h2").value = videos[channel].title;
+      document.querySelector("h2").textContent = videos[channel].title;
       CHANNEL = channel;
     }
   }
