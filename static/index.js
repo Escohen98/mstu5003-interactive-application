@@ -10,55 +10,55 @@ let videos = [
   {
     channel: 1,
     title: "K-POP (Deep House Remix)",
-    source: "https://www.youtube.com/embed/lrzKT-dFUjE",
+    source: "https://www.youtube.com/embed/K4DKVAT2-x8?autoplay=1&amp;controls=0",
     type: "video/mp4"
   },
   {
     channel: 2,
-    title: "The Remakeboot",
-    source: "https://www.youtube.com/embed/H8ZH_mkfPUY",
+    title: "Spooder Man",
+    source: "https://www.youtube.com/embed/uKYV2qjYIS0?autoplay=1&amp;controls=0",
     type: "video/mp4"
   },
   {
     channel: 3,
-    title: "Lofi Remix",
-    source: "https://youfiles.herokuapp.com/665689e0-09a2-43a5-88ee-6e18b61fa004",
+    title: "Ultimate Showdown",
+    source: "https://www.youtube.com/embed/-WlNIQSXRlM?autoplay=1&amp;controls=0",
     type: "video/mp4"
   },
   {
     channel: 4,
     title: "But Make it Anime...",
-    source: "https://www.youtube.com/embed/lpiB2wMc49g",
+    source: "https://www.youtube.com/embed/5a54TPGz9bI?autoplay=1&amp;controls=0",
     type: "video/mp4"
   },
   {
     channel: 5,
-    title: "Yung Gravy - Better (Get Money)",
-    source: "https://www.youtube.com/embed/8oE5Z2GLhNc",
+    title: "Italian Doge who went to Malta",
+    source: "https://www.youtube.com/embed/FcS-fWdtD8k?controls=0&amp;autoplay=1",
     type: "video/mp4"
   },
   {
     channel: 6,
-    title: "Big Ben's Final Bell",
-    source: "https://www.youtube.com/embed/MO7bRMa9bmA",
+    title: "5:00am at Freddy's",
+    source: "https://www.youtube.com/embed/v2IqiOWbDsE?autoplay=1&amp;controls=0",
     type: "video/mp4"
   },
   {
     channel: 7,
-    title: "En Español",
-    source: "https://youtube.com/embed/7jjoyy7_RCk",
+    title: "Dumbest School in America",
+    source: "https://www.youtube.com/embed/YoHqB3BKJxQ?autoplay=1&amp;controls=0",
     type: "video.mp4"
   },
   {
     channel: 8,
-    title: "Becoming Older",
-    source: "https://www.youtube.com/embed/Ixy9HL8w3ik",
+    title: "Dumb Ways to Die",
+    source: "https://www.youtube.com/embed/IJNR2EpS0jw?autoplay=1&amp;controls=0",
     type: "video.mp4"
   },
   {
     channel: 9,
-    title: "Becoming Futuristic",
-    source: "https://www.youtube.com/embed/SMddprKlk1w",
+    title: "The Simpsons Get Rolled...",
+    source: "https://www.youtube.com/embed/2S2IMl0wyaA?controls=0&amp;autoplay=1",
     type: "video.mp4"
   }
 ];
@@ -85,6 +85,19 @@ let videos = [
     let power = settings[0];
     let channel = settings[1].value;
     let volume = settings[2].value;
+
+    video.contentWindow.postMessage(
+      JSON.stringify({ event: "command", func: "mute" }),
+      "*"
+    );
+    video.contentWindow.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "setVolume",
+        args: [volume]
+      }),
+      "*"
+    );
 
     video.volume = setVolume(volume);
     if (!power.checked) {
