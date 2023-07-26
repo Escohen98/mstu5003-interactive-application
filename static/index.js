@@ -151,4 +151,36 @@ let videos = [
     vol = (volume+1)/1000
     return vol.toFixed(2);
   }
+
+  /** Remote control **/
+
+
+  //New event listeners for remote control
+  document.querySelector(".power-switch").addEventListener("change", powerSwitch);
+  document.querySelector("input-btn").addEventListener("click", channelSelector);
+  document.querySelector("input[name='volume']").addEventListener("input", setVolume);
+
+  //Turns power on and off -> boolean
+  function powerSwitch() {
+    let power = this.checked;
+    sendRemoteControlEvent("power", power);
+    if (!power) {
+      document.querySelector("iframe").src = "";
+    } else {
+      let channel = document.querySelector("input[name='channel']").value;
+      sendRemoteControlEvent("channel", channel);
+    }
+  }
+
+  //Change channel -> int from 0-9
+  function channelSelector() {
+    let channel = document.querySelector("input[name='volume']").value;
+    sendRemoteControlEvent("channel", channel);
+  }
+
+  //Set volume -> int from 0-100
+  function setVolume() {
+    let volume = this.value;
+    sendRemoteControlEvent("volume", volume);
+  }
 })();
