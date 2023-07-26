@@ -154,6 +154,12 @@ let videos = [
 
   /** Remote control **/
 
+  const socket = io.connect('http://0.0.0.0:5000')
+
+  function sendRemoteControlEvent(event, value) {
+    socket.emit('remote-control', {event: event, value: value});
+  }
+
 
   //New event listeners for remote control
   document.querySelector(".power-switch").addEventListener("change", powerSwitch);

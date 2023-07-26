@@ -1,7 +1,8 @@
 from flask import Flask, request, url_for, redirect, render_template
 from flask_socketio import SocketIO
+import eventlet
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='eventlet')
 
 VOLUME = 0
 CHANNEL = 0 
@@ -31,4 +32,6 @@ def remote_control(data):
     socketio.emit('tv-settings', {'power': POWER, 'channel': CHANNEL, 'volume': VOLUME}, broadcast=True)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 5000)), app)
+
+
