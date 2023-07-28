@@ -32,4 +32,4 @@ def remote_control(data):
     socketio.emit('tv-settings', {'power': POWER, 'channel': CHANNEL, 'volume': VOLUME}, broadcast=True)
 
 if __name__ == "__main__":
-    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 5000)), app)
+    eventlet.wsgi.server(eventlet.listen(('0.0.0.0', 2345)), app)
