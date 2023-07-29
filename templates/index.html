@@ -18,14 +18,15 @@
       <header>
         <form action="" method="post">
           <label for="power-switch", class="control"> On/Off: <input name="power" type="checkbox" class="power-switch" {% if checked %} checked {% endif %}/></label>
-          <label for="channel-input", class="control"> Channel (0-9): <input name="channel" type="number" id="channel-input" class="num-input" value="0" min="0" max="9"/></label>
+          <label for="channel-input", class="control"> Channel (0-9): <input name="channel" type="number" id="channel-input" class="num-input" value={{channel}} min="0" max="9"/></label>
           <!-- Doesn't wokr with iFrames -->
-          <label for="volume", class="control" hidden> Volume (0-99): <input name="volume" type="number" id="volume-input" class="num-input" value="0" min="0" max="99" /></label>
+          <label for="volume", class="control" hidden> Volume (0-99): <input name="volume" type="number" id="volume-input" class="num-input" value={{volume}} min="0" max="99" hidden /></label>
         </form>
-        <button type="button" class="btn btn-primary" id="input-btn">Change Channel</button>
+        <button type="button" class="btn btn-primary" id="input-btn" hidden>Change Channel</button>
       </header>
       <section>
           <h1> Simpsons TV! </h1>
+          <!--ID is the channel-->
           <h2></h2>
       </section>
       <main>
@@ -33,7 +34,7 @@
         <article id="television">
           <div id="screen">
             <iframe width="560" height="315" src="" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            <img src="{{tv_img}}" alt="simpsons-tv" id="tv-image" >
+            <img src="{{tv_img}}" alt="simpsons-tv" id="tv-image">
           </div>
         </article>
         <article id="remote">

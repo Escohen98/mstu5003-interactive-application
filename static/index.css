@@ -28,7 +28,7 @@ input[type=number] {
   width: 20%;
 }
 
-iframe {
+iframe, video {
   position: absolute;
   left: 15%;
   top: 15%;

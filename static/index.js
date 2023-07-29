@@ -70,12 +70,13 @@ let videos = [
 
   function initialize() {
     let video = document.querySelector("iframe");
+    //let channel = document.getElementById("channel").value;
   //let video = document.querySelector("video");
     //videos.forEach(element => createSource(video, element));
     //document.querySelector(".power-switch").checked=true;
-    document.querySelector("input").value = 0;
-    document.querySelector("#input-btn").addEventListener("click", updatePlayer);
-    //TO-DO: Give the powerbutton its own event listener.
+    //document.querySelector("input").value = 0;
+    document.querySelector("#channel-input").addEventListener("change", updatePlayer);
+    //document.querySelector("#volume-input").addEventListener("change", updatePlayer)
     document.querySelector(".power-switch").addEventListener("change", power);
     power() //Now updated with flask
     updatePlayer() //Start playing video is power-switch is checked. Need user approval
@@ -106,7 +107,7 @@ let videos = [
 
     video.volume = setVolume(volume);
     if (!power.checked) {
-     // CHANNEL = -1;
+      //CHANNEL = -1;
     }
 
     if (channel != CHANNEL)
@@ -115,14 +116,14 @@ let videos = [
  }
 
   function power() {
-    console.log("go");
+    console.log(CHANNEL);
     let frame = document.querySelector("iframe");
     let header = document.querySelector("h2").textContent;
     console.log(document.querySelector(".power-switch").checked)
     if (document.querySelector(".power-switch").checked) {
       console.log(CHANNEL)
-      //frame.src = videos[CHANNEL].source;
-      frame.src ="./static/videos/Big Ben's Final Rick Roll.mp4"
+      frame.src = videos[CHANNEL].source;
+      //frame.src ="./static/videos/Big Ben's Final Rick Roll.mp4"
       header = videos[CHANNEL].title;
     } else {
       frame.src = "";
@@ -157,42 +158,4 @@ let videos = [
     vol = (volume+1)/1000
     return vol.toFixed(2);
   }
-
-  /** Remote control **/
-/*
-  const socket = io.connect('http://' + document.domain + ":" + location.port);
-
-  function sendRemoteControlEvent(event, value) {
-    socket.emit('remote-control', {event: event, value: value});
-  }
-
-
-  //New event listeners for remote control
-  document.querySelector(".power-switch").addEventListener("change", powerSwitch);
-  document.querySelector("input-btn").addEventListener("click", channelSelector);
-  document.querySelector("input[name='volume']").addEventListener("input", setVolume);
-
-  //Turns power on and off -> boolean
-  function powerSwitch() {
-    let power = this.checked;
-    sendRemoteControlEvent("power", power);
-    if (!power) {
-      document.querySelector("iframe").src = "";
-    } else {
-      let channel = document.querySelector("input[name='channel']").value;
-      sendRemoteControlEvent("channel", channel);
-    }
-  }
-
-  //Change channel -> int from 0-9
-  function channelSelector() {
-    let channel = document.querySelector("input[name='volume']").value;
-    sendRemoteControlEvent("channel", channel);
-  }
-
-  //Set volume -> int from 0-100
-  function setVolume() {
-    let volume = this.value;
-    sendRemoteControlEvent("volume", volume);
-  }*/
 })();

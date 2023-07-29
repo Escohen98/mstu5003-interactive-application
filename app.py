@@ -45,10 +45,23 @@ def index():
         print(request.form.get('power'))
     video = socketio.server.namespace_handlers['/'].settings.current_video
     checked = socketio.server.namespace_handlers['/'].settings.power
+    channel = socketio.server.namespace_handlers['/'].settings.channel
+    volume = socketio.server.namespace_handlers['/'].settings.volume
     print("Power: ", socketio.server.namespace_handlers['/'].settings.power)
     tv_img="../static/images/the_simpsons_tv.png"
     remote_img="../static/images/cartoon_remote.png"
-    return render_template('./index.html', video=video, tv_img = tv_img, remote_img = remote_img, checked=checked)
+    return render_template('./index.html', video=video, channel=channel, volume=set_volume(volume), tv_img = tv_img, remote_img = remote_img, checked=checked)
+
+#Does the math to set the volume
+#Adapted from index.js
+def set_volume(volume):
+    #safeguard
+    if volume > 99:
+        volume = 99
+    elif volume < 0:
+        volume = 0
+    vol = (volume+1)/1000
+    return "{:.2f}".format(vol)
 
 socketio.on_namespace(RemoteControlHandler('/'))
 
