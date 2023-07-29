@@ -17,7 +17,7 @@
     <body>
       <header>
         <form action="" method="post">
-          <label for="power-switch", class="control"> On/Off: <input name="power" type="checkbox" class="power-switch"/></label>
+          <label for="power-switch", class="control"> On/Off: <input name="power" type="checkbox" class="power-switch" {% if checked %} checked {% endif %}/></label>
           <label for="channel-input", class="control"> Channel (0-9): <input name="channel" type="number" id="channel-input" class="num-input" value="0" min="0" max="9"/></label>
           <!-- Doesn't wokr with iFrames -->
           <label for="volume", class="control" hidden> Volume (0-99): <input name="volume" type="number" id="volume-input" class="num-input" value="0" min="0" max="99" /></label>

@@ -4,7 +4,8 @@ let videos = [
   {
     channel: 0,
     title: "Original",
-    source: "https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4",
+    //source: "https://ia804609.us.archive.org/4/items/rick-roll/Rick%20Roll.mp4",
+    source: "./static/videos/Big Ben's Final Rick Roll.mp4",
     type: "video/mp4"
   },
   {
@@ -64,18 +65,20 @@ let videos = [
 ];
 
 (function() {
-  let CHANNEL = 0;
+  let CHANNEL = 1;
   window.addEventListener("load", initialize);
 
   function initialize() {
-    let video = document.querySelector("iframe")
+    let video = document.querySelector("iframe");
   //let video = document.querySelector("video");
     //videos.forEach(element => createSource(video, element));
-    document.querySelector(".power-switch").checked = false;
+    //document.querySelector(".power-switch").checked=true;
     document.querySelector("input").value = 0;
     document.querySelector("#input-btn").addEventListener("click", updatePlayer);
     //TO-DO: Give the powerbutton its own event listener.
     document.querySelector(".power-switch").addEventListener("change", power);
+    power() //Now updated with flask
+    updatePlayer() //Start playing video is power-switch is checked. Need user approval
   }
 
   //Changes tv settings
@@ -103,7 +106,7 @@ let videos = [
 
     video.volume = setVolume(volume);
     if (!power.checked) {
-      CHANNEL = -1;
+     // CHANNEL = -1;
     }
 
     if (channel != CHANNEL)
@@ -115,8 +118,11 @@ let videos = [
     console.log("go");
     let frame = document.querySelector("iframe");
     let header = document.querySelector("h2").textContent;
+    console.log(document.querySelector(".power-switch").checked)
     if (document.querySelector(".power-switch").checked) {
-      frame.src = videos[CHANNEL].source;
+      console.log(CHANNEL)
+      //frame.src = videos[CHANNEL].source;
+      frame.src ="./static/videos/Big Ben's Final Rick Roll.mp4"
       header = videos[CHANNEL].title;
     } else {
       frame.src = "";
@@ -153,7 +159,7 @@ let videos = [
   }
 
   /** Remote control **/
-
+/*
   const socket = io.connect('http://' + document.domain + ":" + location.port);
 
   function sendRemoteControlEvent(event, value) {
@@ -188,5 +194,5 @@ let videos = [
   function setVolume() {
     let volume = this.value;
     sendRemoteControlEvent("volume", volume);
-  }
+  }*/
 })();
