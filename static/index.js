@@ -158,4 +158,23 @@ let videos = [
     vol = (volume+1)/1000
     return vol.toFixed(2);
   }
+
+  /* Socket IO Auto-update */
+  // Connect to the Socket.IO server
+  var socket = io.connect('ws://localhost:2345');
+
+  // Listen to the 'tv_settings' event
+  socket.on('tv_settings', function (data) {
+    console.log(data);
+    
+    // Apply the new settings
+    document.querySelector(".power-switch").checked = data.power;
+    document.querySelector("#channel-input").value = data.channel;
+    document.querySelector("#volume-input").value = data.volume;
+    
+    // Update the player with the new settings
+    updatePlayer();
+});
+
+
 })();
